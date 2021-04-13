@@ -19,8 +19,9 @@ class ExpansionListViewController: UIViewController {
     }
     
     private func fetchExpansionList() {
-        networkManager.request(fromUrl: .sets,
-                               responseType: Sets.self) { (result) in
+        let service = MagicService.sets
+        networkManager.request(service: service,
+                               responseType: Sets.self)  { (result) in
             switch result {
             case .success(let cardSets):
                 print(cardSets)

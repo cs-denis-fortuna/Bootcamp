@@ -9,10 +9,10 @@ import Foundation
 
 final class NetworkManager {
     
-    func request<T: Decodable>(fromUrl url: MagicService,
+    func request<T: Decodable>(service: ServiceProtocol,
                                responseType: T.Type,
                                callback: @escaping (Result<T, Error>) -> Void) {
-        if let url = URL(string: url.path) {
+        if let url = URL(string: service.path) {
             let task = URLSession.shared.dataTask(with: url) { [weak self] (data, response, error) in
                 if error != nil {
                     callback(.failure(NSError()))

@@ -12,7 +12,7 @@ enum MagicService {
     case booster(setId: String)
 }
 
-extension MagicService {
+extension MagicService: ServiceProtocol {
     var path: String {
         switch self {
         case .sets:
