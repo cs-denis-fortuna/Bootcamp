@@ -12,7 +12,10 @@ class MainTabBarControler: UITabBarController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        let expansionList = generateNavigationCiontroller(ExpansionListViewController(), title: "Expansions")
+        let networkManager = NetworkManager()
+        let expansionListViewController = ExpansionListViewController(networkManager: networkManager)
+        
+        let expansionList = generateNavigationCiontroller(expansionListViewController, title: "Expansions")
         let expansionCollection = generateNavigationCiontroller(ExpansionsCollectionViewController(), title: "Favorites")
         UINavigationBar.appearance().prefersLargeTitles = true
         viewControllers = [expansionList, expansionCollection]

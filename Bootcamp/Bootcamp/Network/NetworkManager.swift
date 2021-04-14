@@ -7,7 +7,13 @@
 
 import Foundation
 
-final class NetworkManager {
+protocol NetworkManagerProtocol {
+    func request<T: Decodable>(service: ServiceProtocol,
+                               responseType: T.Type,
+                               callback: @escaping (Result<T, Error>) -> Void)
+}
+
+final class NetworkManager: NetworkManagerProtocol {
     
     func request<T: Decodable>(service: ServiceProtocol,
                                responseType: T.Type,
@@ -30,7 +36,7 @@ final class NetworkManager {
         }
     }
     
-    private func decode<T: Decodable>(data: Data) -> T?{
+    func decode<T: Decodable>(data: Data) -> T?{
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         
