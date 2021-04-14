@@ -9,6 +9,9 @@ import UIKit
 
 class ExpansionListViewController: UIViewController {
     
+    // MARK: Navigation
+    weak var coordinator: ExpansionCoordinator?
+    
     // MARK: Network
     private let networkManager: NetworkManagerProtocol
     
