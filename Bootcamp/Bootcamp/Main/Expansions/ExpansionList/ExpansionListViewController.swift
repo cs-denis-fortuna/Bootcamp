@@ -11,13 +11,12 @@ class ExpansionListViewController: UIViewController {
     
     // MARK: Views
     lazy var tableView: UITableView = {
-        let tableView = UITableView()
-//        let tableView = UITableView(frame: .zero, style: .plain)
+        let tableView = UITableView(frame: .zero, style: .plain)
         tableView.delegate = self
         tableView.dataSource = self
+        tableView.layer.contents = #imageLiteral(resourceName: "fundo").cgImage
 //        tableView.prefetchDataSource = self
-//        tableView.backgroundColor = BackgroundColor.main
-        tableView.backgroundColor = .yellow
+//        tableView.separatorColor = TextColor.title
         tableView.register(ExpansionTableViewCell.self, forCellReuseIdentifier: Identifier.Cell.expansionCell)
         tableView.translatesAutoresizingMaskIntoConstraints = false
         return tableView
@@ -35,8 +34,13 @@ class ExpansionListViewController: UIViewController {
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.backgroundColor = .green
+        self.title = "Expansions"
+        setupViews()
         fetchExpansionList()
+    }
+    
+    override var preferredStatusBarStyle: UIStatusBarStyle {
+        return .lightContent
     }
     
     private func fetchExpansionList() {
@@ -46,10 +50,9 @@ class ExpansionListViewController: UIViewController {
             switch result {
             case .success(let cardSets):
                 self.expansions = cardSets.sets
-//                DispatchQueue.main.async {
+                DispatchQueue.main.async {
                     self.tableView.reloadData()
-//                }
-            
+                }
             case .failure(let error):
                 print(error)
             }

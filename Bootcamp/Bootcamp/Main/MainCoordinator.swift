@@ -9,20 +9,18 @@ import UIKit
 
 final class MainCoordinator: Coordinator {
     var currentViewController: UIViewController?
-    var navigationController: UINavigationController
+    var navigationController: UINavigationController?
     
     init() {
-        self.navigationController = UINavigationController()
-//        navigationController.applyCustomAppearence()
+        navigationController = nil
+        currentViewController = nil
     }
     
     func start(with navigationType: NavigationType) -> UIViewController {
         let mainTabBarControler = MainTabBarControler()
         mainTabBarControler.viewControllers = setupViewControllers()
         mainTabBarControler.coordinator = self
-        
-        show(mainTabBarControler, with: navigationType)
-        return navigationController
+        return mainTabBarControler
     }
     
     private func setupViewControllers() -> [UIViewController] {

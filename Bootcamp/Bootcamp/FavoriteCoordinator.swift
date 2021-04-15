@@ -10,18 +10,18 @@ import UIKit
 final class FavoriteCoordinator: CardsCoordinatorProtocol {
     
     var currentViewController: UIViewController?
-    var navigationController: UINavigationController
+    var navigationController: UINavigationController?
     
     init() {
         self.navigationController = UINavigationController()
-//        navigationController.applyCustomAppearence()
     }
     
     func start(with navigationType: NavigationType) -> UIViewController {
         let cardsCollection = CardsCollectionViewController()
         cardsCollection.coordinator = self
-        show(cardsCollection, with: .push)
-        return cardsCollection
+        navigationController?.viewControllers = [cardsCollection]
+        guard let navController = navigationController else { return UIViewController() }
+        return navController
     }
     
     func didSelectCard(_ cardId: String) {

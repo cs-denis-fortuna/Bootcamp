@@ -9,18 +9,19 @@ import UIKit
 
 final class ExpansionCoordinator: Coordinator {
     var currentViewController: UIViewController?
-    var navigationController: UINavigationController
+    var navigationController: UINavigationController?
     
     init() {
         self.navigationController = UINavigationController()
-//        navigationController.applyCustomAppearence()
     }
     
     func start(with navigationType: NavigationType) -> UIViewController {
         let expansionList = ExpansionListViewController()
         expansionList.coordinator = self
-        show(expansionList, with: .root)
-        return expansionList
+        navigationController?.viewControllers = [expansionList]
+        navigationController?.navigationBar.barStyle = .black
+        guard let navController = navigationController else { return UIViewController() }
+        return navController
     }
 }
 

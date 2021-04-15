@@ -15,6 +15,8 @@ extension Coordinator {
         currentViewController = viewController
 
         switch transition {
+        case .main:
+            return
         case .push:
             push(viewController, animated: animated)
         case .present(let completion):
@@ -25,14 +27,14 @@ extension Coordinator {
     }
 
     private func push(_ viewController: UIViewController, animated: Bool) {
-        navigationController.pushViewController(viewController, animated: animated)
+        navigationController?.pushViewController(viewController, animated: animated)
     }
 
     private func present(_ viewController: UIViewController, animated: Bool, completion: (() -> Void)?) {
-        navigationController.present(viewController, animated: animated, completion: completion)
+        navigationController?.present(viewController, animated: animated, completion: completion)
     }
 
     private func root(_ viewController: UIViewController, animated: Bool) {
-        navigationController.setViewControllers([viewController], animated: animated)
+        navigationController?.setViewControllers([viewController], animated: animated)
     }
 }

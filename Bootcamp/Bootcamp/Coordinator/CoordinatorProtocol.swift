@@ -8,6 +8,7 @@
 import UIKit
 
 enum NavigationType {
+    case main
     case root
     case push
     case present(_ completion: (() -> Void)? = nil)
@@ -15,6 +16,6 @@ enum NavigationType {
 
 protocol Coordinator: AnyObject {
     var currentViewController: UIViewController? { get set }
-    var navigationController: UINavigationController { get set }
+    var navigationController: UINavigationController? { get set }
     func start(with navigationType: NavigationType) -> UIViewController
 }
