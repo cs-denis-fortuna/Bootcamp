@@ -18,8 +18,7 @@ final class FavoriteCoordinator: CardsCoordinatorProtocol {
     }
     
     func start(with navigationType: NavigationType) -> UIViewController {
-        let networkManager = NetworkManager()
-        let cardsCollection = CardsCollectionViewController(networkManager: networkManager)
+        let cardsCollection = CardsCollectionViewController()
         cardsCollection.coordinator = self
         show(cardsCollection, with: .push)
         return cardsCollection

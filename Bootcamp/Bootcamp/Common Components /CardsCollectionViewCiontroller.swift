@@ -13,17 +13,7 @@ class CardsCollectionViewController: UIViewController {
     weak var coordinator: CardsCoordinatorProtocol?
     
     // MARK: Network
-    private let networkManager: NetworkManagerProtocol
-    
-    // MARK: Init
-    init(networkManager: NetworkManagerProtocol) {
-        self.networkManager = networkManager
-        super.init(nibName: nil, bundle: nil)
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
+    private let networkManager: NetworkManager = NetworkManager()
     
     // MARK: Life Cicle
     override func viewDidLoad() {

@@ -17,8 +17,7 @@ final class ExpansionCoordinator: Coordinator {
     }
     
     func start(with navigationType: NavigationType) -> UIViewController {
-        let networkManager = NetworkManager()
-        let expansionList = ExpansionListViewController(networkManager: networkManager)
+        let expansionList = ExpansionListViewController()
         expansionList.coordinator = self
         show(expansionList, with: .root)
         return expansionList
