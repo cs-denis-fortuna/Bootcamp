@@ -15,14 +15,14 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
     func scene(_ scene: UIScene, willConnectTo session: UISceneSession, options connectionOptions: UIScene.ConnectionOptions) {
         guard let windowScene = scene as? UIWindowScene else { return }
         
-        navgationBarConfig()
+        navigationBarConfig()
         
         window = UIWindow(windowScene: windowScene)
         window?.rootViewController = mainCoordinator.start(with: .root)
         window?.makeKeyAndVisible()
     }
     
-    func navgationBarConfig() {
+    func navigationBarConfig() {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().isTranslucent = true
