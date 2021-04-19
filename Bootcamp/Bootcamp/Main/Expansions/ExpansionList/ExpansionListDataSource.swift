@@ -18,8 +18,8 @@ class ExpansionListDataSource: NSObject, UITableViewDataSource, UITableViewDeleg
     var didSelectExpansion: ((CardSet) -> Void)?
     
     // MARK: init
-    func setup(cardSet: [CardSet]) {
-        self.cardSet = cardSet
+    init(cardSet: [CardSet]) {
+        super.init()
         groupedExpansions = groupExpansionsAlphabetically(fromCardSets: cardSet)
         initialLettersList = gruopInitialLettersForSectionHeaders(groupedExpansions)
     }
@@ -39,13 +39,10 @@ class ExpansionListDataSource: NSObject, UITableViewDataSource, UITableViewDeleg
         guard let cell = tableView.dequeueReusableCell(withIdentifier: Identifier.Cell.expansionCell, for: indexPath) as? ExpansionTableViewCell else {
             return UITableViewCell()
         }
-        
-        let section = initialLettersList[indexPath.section]
-        guard let expansion = groupedExpansions[section]?[indexPath.row],
-              let name = expansion.name else { return UITableViewCell() }
-    
-        cell.setup(expansionName: name)
+        guard let cardSet = findCard(forIndePath: indexPath),
+              let name = cardSet.name else { return UITableViewCell()}
 
+        cell.setup(expansionName: name)
         return cell
     }
     
@@ -55,6 +52,16 @@ class ExpansionListDataSource: NSObject, UITableViewDataSource, UITableViewDeleg
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         50
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let cardSet = findCard(forIndePath: indexPath) else { return }
+        didSelectExpansion?(cardSet)
+    }
+    
+    private func findCard(forIndePath indexPath: IndexPath) -> CardSet? {
+        let section = initialLettersList[indexPath.section]
+        return groupedExpansions[section]?[indexPath.row]
     }
     
     private func groupExpansionsAlphabetically(fromCardSets expansions: [CardSet]) -> [String : [CardSet]] {

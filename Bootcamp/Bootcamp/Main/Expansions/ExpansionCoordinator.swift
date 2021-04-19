@@ -16,7 +16,8 @@ final class ExpansionCoordinator: Coordinator {
     }
     
     func start(with navigationType: NavigationType) -> UIViewController {
-        let expansionList = ExpansionListViewController()
+        let networkManager = NetworkManager()
+        let expansionList = ExpansionListViewController(networkManager: networkManager)
         expansionList.coordinator = self
         navigationController?.viewControllers = [expansionList]
         navigationController?.navigationBar.barStyle = .black
@@ -26,8 +27,10 @@ final class ExpansionCoordinator: Coordinator {
 }
 
 // MARK: ExpansionListViewController events
-//extension ExpansionCoordinator {
-//    func didSelectExpansion(_ expansionId: String) {
-//        
-//    }
-//}
+extension ExpansionCoordinator {
+    func didSelectExpansion(_ expansionId: CardSet) {
+        let cardsCollection = CardsCollectionViewController()
+        cardsCollection.setup(expansionId.code, andFetchType: .remotelly)
+        show(cardsCollection, with: .push)
+    }
+}

@@ -19,6 +19,8 @@ final class MainCoordinator: Coordinator {
     func start(with navigationType: NavigationType) -> UIViewController {
         let mainTabBarControler = MainTabBarControler()
         mainTabBarControler.viewControllers = setupViewControllers()
+        mainTabBarControler.tabBar.items?[0].title = "Expansions"
+        mainTabBarControler.tabBar.items?[1].title = "Favorites"
         mainTabBarControler.coordinator = self
         return mainTabBarControler
     }

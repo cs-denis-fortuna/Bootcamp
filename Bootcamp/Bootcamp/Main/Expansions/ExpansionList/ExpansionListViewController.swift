@@ -34,24 +34,28 @@ class ExpansionListViewController: UIViewController {
     }
     
     // MARK: Navigation
-    weak var coordinator: ExpansionCoordinator?
+    var coordinator: ExpansionCoordinator?
     
     // MARK: Network
-    private let networkManager: NetworkManager = NetworkManager()
-    
+    private let networkManager: NetworkManagerProtocol
 
-    
+    init(networkManager: NetworkManagerProtocol) {
+         self.networkManager = networkManager
+         super.init(nibName: nil, bundle: nil)
+     }
+
+     required init?(coder: NSCoder) {
+         fatalError("init(coder:) has not been implemented")
+     }
+        
     // MARK: Life Cycle
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.title = "Expansions"
+        self.navigationItem.title = "Expansions"
         view.layer.contents = #imageLiteral(resourceName: "fundo").cgImage
+        self.navigationItem.largeTitleDisplayMode = .always
         setupViews()
         fetchExpansionList()
-    }
-    
-    override var preferredStatusBarStyle: UIStatusBarStyle {
-        return .lightContent
     }
     
     private func fetchExpansionList() {
@@ -60,9 +64,7 @@ class ExpansionListViewController: UIViewController {
                                responseType: Sets.self)  { (result) in
             switch result {
             case .success(let sets):
-                let expansionListDatasource = ExpansionListDataSource()
-                expansionListDatasource.setup(cardSet: sets.sets)
-                self.dataSource = expansionListDatasource
+                self.dataSource = ExpansionListDataSource(cardSet: sets.sets)
             case .failure(let error):
                 print(error)
             }
@@ -89,6 +91,6 @@ extension ExpansionListViewController: ViewCodable {
 // MARK: Navigation
 extension ExpansionListViewController {
     func showDetailForSelectedExpansion(_ cardSet: CardSet) {
-        
+        coordinator?.didSelectExpansion(cardSet)
     }
 }

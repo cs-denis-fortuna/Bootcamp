@@ -11,7 +11,7 @@ private enum Colors {
     static let white = UIColor.white
 }
 
-enum TextColor {
+enum MainColor {
     static let title = Colors.white
 }
 

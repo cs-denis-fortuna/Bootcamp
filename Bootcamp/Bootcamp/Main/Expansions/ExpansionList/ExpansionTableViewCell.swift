@@ -12,7 +12,7 @@ class ExpansionTableViewCell: UITableViewCell {
     // MARK: Views
     let separatorView: UIView = {
         let separator = UILabel()
-        separator.backgroundColor = TextColor.title
+        separator.backgroundColor = MainColor.title
         separator.translatesAutoresizingMaskIntoConstraints = false
         return separator
     }()
@@ -20,10 +20,18 @@ class ExpansionTableViewCell: UITableViewCell {
     let  nameLabel: UILabel = {
         let label = UILabel()
         label.numberOfLines = 1
-        label.textColor = TextColor.title
-        label.font = UIFont(name: "Roboto-Bold", size: 18)
+        label.textColor = MainColor.title
+        label.font = Fonts.bold(size: 18).path
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
+    }()
+    
+    let vector: UIImageView = {
+        let vec = UIImageView(frame: .zero)
+        vec.clipsToBounds = true
+        vec.contentMode = .scaleAspectFill
+        vec.translatesAutoresizingMaskIntoConstraints = false
+        return vec
     }()
 
     // MARK: Life Cycle
@@ -40,6 +48,7 @@ class ExpansionTableViewCell: UITableViewCell {
 
     // MARK: Setup
     func setup(expansionName: String) {
+        vector.image = UIImage(named: "Vector.png")
         nameLabel.text = expansionName
     }
     
@@ -55,6 +64,7 @@ extension ExpansionTableViewCell: ViewCodable {
     func setupViewHierarchy() {
         addSubview(nameLabel)
         addSubview(separatorView)
+        addSubview(vector)
     }
     
     func setupConstraints() {
@@ -69,6 +79,12 @@ extension ExpansionTableViewCell: ViewCodable {
             separatorView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 16),
             separatorView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
             separatorView.heightAnchor.constraint(equalToConstant: 1),
+            
+            vector.centerYAnchor.constraint(equalTo: nameLabel.centerYAnchor),
+            vector.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
+            vector.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -16),
+            vector.heightAnchor.constraint(equalToConstant: 12),
+            vector.widthAnchor.constraint(equalToConstant: 6)
         ])
     }
 }

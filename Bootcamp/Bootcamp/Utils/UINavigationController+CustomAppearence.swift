@@ -11,8 +11,8 @@ extension UINavigationController {
     func applyCustomAppearence() {
         let navBarAppearance = UINavigationBarAppearance()
         navBarAppearance.configureWithOpaqueBackground()
-        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: TextColor.title]
-        navBarAppearance.titleTextAttributes = [.foregroundColor: TextColor.title]
+        navBarAppearance.largeTitleTextAttributes = [.foregroundColor: MainColor.title]
+        navBarAppearance.titleTextAttributes = [.foregroundColor: MainColor.title]
         navBarAppearance.backgroundColor = UIColor.white
         
         

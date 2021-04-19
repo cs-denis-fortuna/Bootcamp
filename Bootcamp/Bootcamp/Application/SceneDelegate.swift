@@ -26,8 +26,10 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         UINavigationBar.appearance().setBackgroundImage(UIImage(), for: .default)
         UINavigationBar.appearance().shadowImage = UIImage()
         UINavigationBar.appearance().isTranslucent = true
-        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: TextColor.title]
-        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: TextColor.title]
+        UINavigationBar.appearance().prefersLargeTitles = true
+        
+        UINavigationBar.appearance().largeTitleTextAttributes = [.foregroundColor: MainColor.title]
+        UINavigationBar.appearance().titleTextAttributes = [.foregroundColor: MainColor.title]
     }
 }
 
