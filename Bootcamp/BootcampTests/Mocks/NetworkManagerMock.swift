@@ -11,7 +11,7 @@ final class NetworkManagerMock: NetworkManagerProtocol {
     
     var callRequestWithService: ServiceProtocol?
     
-    func request<T>(service: ServiceProtocol, responseType: T.Type, callback: @escaping (Result<T, Error>) -> Void) where T : Decodable {
+    func request<T>(service: ServiceProtocol, responseType: T.Type, callback: @escaping (Result<T, MagicError>) -> Void) where T : Decodable {
         callRequestWithService = service
     }
 }

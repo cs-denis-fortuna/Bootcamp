@@ -28,9 +28,9 @@ final class ExpansionCoordinator: Coordinator {
 
 // MARK: ExpansionListViewController events
 extension ExpansionCoordinator {
-    func didSelectExpansion(_ expansionId: CardSet) {
-        let cardsCollection = CardsCollectionViewController()
-        cardsCollection.setup(expansionId.code, andFetchType: .remotelly)
+    func didSelectExpansion(_ expansion: CardSet) {
+        let networkManager = NetworkManager()
+        let cardsCollection = CardsCollectionViewController(networkManager: networkManager, dbManager: nil, cardSet: expansion)
         show(cardsCollection, with: .push)
     }
 }

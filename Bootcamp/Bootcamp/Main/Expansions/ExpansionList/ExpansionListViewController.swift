@@ -66,7 +66,7 @@ class ExpansionListViewController: UIViewController {
             case .success(let sets):
                 self.dataSource = ExpansionListDataSource(cardSet: sets.sets)
             case .failure(let error):
-                print(error)
+                print("")
             }
         }
     }

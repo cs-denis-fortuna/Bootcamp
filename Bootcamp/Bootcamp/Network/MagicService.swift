@@ -9,16 +9,22 @@ import Foundation
 
 enum MagicService {
     case sets
-    case booster(setId: String)
+    case cardsFromSet(setId: String)
+    case cardFromId(cardId: String)
 }
 
 extension MagicService: ServiceProtocol {
     var path: String {
         switch self {
         case .sets:
+            //get all sets
             return "https://api.magicthegathering.io/v1/sets"
-        case .booster(let id):
-            return "https://api.magicthegathering.io/v1/sets/\(id)/booster"
+        case .cardsFromSet(let setId):
+            //get all cards from specific set (by set code)
+            return "https://api.magicthegathering.io/v1/sets/\(setId)/booster"
+        case .cardFromId(let cardId):
+            //get single card by card id
+            return "https://api.magicthegathering.io/v1/cards/\(cardId)"
         }
     }
 }

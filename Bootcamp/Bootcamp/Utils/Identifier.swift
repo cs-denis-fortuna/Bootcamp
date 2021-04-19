@@ -10,5 +10,6 @@ import Foundation
 enum Identifier {
     enum Cell {
         static let expansionCell = "expansionCell"
+        static let cardCell = "cardCell"
     }
 }
