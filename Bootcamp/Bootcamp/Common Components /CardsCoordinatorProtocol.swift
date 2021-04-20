@@ -8,5 +8,5 @@
 import Foundation
 
 protocol CardsCoordinatorProtocol: Coordinator {
-    func didSelectCard(_ cardId: String)
+    func didSelectCard(_ cardId: Card)
 }

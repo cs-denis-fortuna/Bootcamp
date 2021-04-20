@@ -52,7 +52,8 @@ class ExpansionListViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationItem.title = "Expansions"
-        view.layer.contents = #imageLiteral(resourceName: "fundo").cgImage
+//        view.layer.contents = #imageLiteral(resourceName: "fundo").cgImage
+        view.layer.contents = Images.background.cgImage
         self.navigationItem.largeTitleDisplayMode = .always
         setupViews()
         fetchExpansionList()

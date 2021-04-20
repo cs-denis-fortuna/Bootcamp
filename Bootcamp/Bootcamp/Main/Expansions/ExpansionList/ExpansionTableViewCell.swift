@@ -48,7 +48,9 @@ class ExpansionTableViewCell: UITableViewCell {
 
     // MARK: Setup
     func setup(expansionName: String) {
-        vector.image = UIImage(named: "Vector.png")
+//        vector.image = UIImage(named: "Vector.png")
+        vector.image = Images.chevron
+        
         nameLabel.text = expansionName
     }
     

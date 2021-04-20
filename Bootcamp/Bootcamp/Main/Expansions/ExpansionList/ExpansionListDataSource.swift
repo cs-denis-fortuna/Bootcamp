@@ -14,7 +14,7 @@ class ExpansionListDataSource: NSObject, UITableViewDataSource, UITableViewDeleg
     private var initialLettersList: [String] = [""]
     private var cardSet = [CardSet]()
     
-    // MARK:
+    // MARK: ViewController Communication
     var didSelectExpansion: ((CardSet) -> Void)?
     
     // MARK: init

@@ -29,7 +29,7 @@ final class NetworkManager: NetworkManagerProtocol {
                     callback(.failure(MagicError.failure))
                     return
                 }
-                if let httpResponde = response as? HTTPURLResponse {
+                if let httpResponde = response as? HTTPURLResponse, httpResponde.statusCode  > 299  {
                     print("HTTP URL RESPONSE Code", httpResponde.statusCode, httpResponde.description)
                     callback(.failure(MagicError.notFound))
                 }

@@ -20,14 +20,28 @@ class CardsCollectionViewController: UIViewController {
     
     lazy var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionFlowLayout)
-//        collection.delegate = self
-//        collection.dataSource = self
 //        collection.prefetchDataSource = self
         collection.backgroundColor = .clear
         collection.register(CardCollectionViewCell.self, forCellWithReuseIdentifier: Identifier.Cell.cardCell)
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
+    
+    // MARK: Data Source
+    private var dataSource: CardsCollectionDataSource? {
+        didSet {
+            guard let dataSource = dataSource else { return }
+            
+            dataSource.didSelectCard = { [weak self] selectedCard in
+                self?.showDetailForSelectedCard(selectedCard)
+            }
+            DispatchQueue.main.async {
+                self.collectionView.dataSource = dataSource
+                self.collectionView.delegate = dataSource
+                self.collectionView.reloadData()
+            }
+        }
+    }
     
     // MARK: Fetch Type
     private var networkManager: NetworkManagerProtocol?
@@ -53,7 +67,8 @@ class CardsCollectionViewController: UIViewController {
     // MARK: Life Cicle
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.layer.contents = #imageLiteral(resourceName: "fundo").cgImage
+//        view.layer.contents = #imageLiteral(resourceName: "fundo").cgImage
+        view.layer.contents = Images.background.cgImage
         self.navigationItem.title = cardSet?.name ?? ""
         setupViews()
         fetchCards()
@@ -77,7 +92,7 @@ class CardsCollectionViewController: UIViewController {
             case .success(let cards):
                 print("Successssss!")
                 print("*************")
-                print(cards)
+                self.dataSource = CardsCollectionDataSource(cardss: cards.cards)
             case .failure(let error):
                 print("******")
                 print("CardSet has no cards to show =/")
@@ -102,8 +117,15 @@ extension CardsCollectionViewController: ViewCodable {
         NSLayoutConstraint.activate([
             collectionView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
             collectionView.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor),
-            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 21),
-            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -21)
+            collectionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10),
+            collectionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10)
         ])
+    }
+}
+
+// MARK: Navigation
+extension CardsCollectionViewController {
+    func showDetailForSelectedCard(_ card: Card) {
+        coordinator?.didSelectCard(card)
     }
 }
