@@ -7,20 +7,26 @@
 
 import Foundation
 
-enum MagicService {
+enum MagicService: ServiceProtocol {
     case sets
-    case booster(setId: String)
-}
-
-extension MagicService: ServiceProtocol {
+    case cardsFromSet(setId: String)
+    case cardFromId(cardId: String)
+    
     var path: String {
+        var components = URLComponents()
+        components.scheme = "https"
+        components.host = "api.magicthegathering.io"
         switch self {
+        case .cardFromId(let cardId):
+            components.path = "/v1/cards"
+            components.queryItems = [URLQueryItem(name: "id", value: cardId)]
+        case .cardsFromSet(let setId):
+            components.path = "/v1/cards"
+            components.queryItems = [URLQueryItem(name: "set", value: setId)]
         case .sets:
-            return "https://api.magicthegathering.io/v1/sets"
-        case .booster(let id):
-            return "https://api.magicthegathering.io/v1/sets/\(id)/booster"
+            components.path = "/v1/sets"
         }
+        guard let componentString = components.string else { return "" }
+        return componentString
     }
 }
-
-
