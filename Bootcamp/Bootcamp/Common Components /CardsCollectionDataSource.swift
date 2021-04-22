@@ -38,10 +38,24 @@ class CardsCollectionDataSource: NSObject, UICollectionViewDataSource, UICollect
         cardsTypeList.count
     }
     
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if let sectionHeader = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: Identifier.Cell.cardsSectionHeaderCell,
+                                                                               for: indexPath) as? CardsSectionHeaderView {
+            let sectionName = cardsTypeList[indexPath.section]
+            sectionHeader.setup(forTitle: sectionName)
+            return sectionHeader
+        }
+        return UICollectionReusableView()
+    }
+    
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let cardSetSection = cardsTypeList[section]
         let cardsInSection = groupedCards[cardSetSection]
         return cardsInSection?.count ?? 0
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.frame.width, height: 40)
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -54,11 +68,11 @@ class CardsCollectionDataSource: NSObject, UICollectionViewDataSource, UICollect
         guard let cardsForSection = groupedCards[sectionHeader] else { return UICollectionViewCell() }
         let card = cardsForSection[indexPath.row]
         
-        cell.setup(cardImageUrl: card.imageURL)
+        cell.setup(cardImageUrl: card.imageUrl)
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: collectionView.frame.width/3, height: 108)
+        return CGSize(width: collectionView.frame.width/3, height: 118)
     }
 }

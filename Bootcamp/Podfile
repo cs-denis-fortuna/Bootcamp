@@ -7,6 +7,8 @@ target 'Bootcamp' do
 
   # Pods for Bootcamp
 
+  pod 'Kingfisher'
+
   target 'BootcampTests' do
     inherit! :search_paths
     pod 'Quick'

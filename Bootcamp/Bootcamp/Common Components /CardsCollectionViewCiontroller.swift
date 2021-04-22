@@ -20,9 +20,9 @@ class CardsCollectionViewController: UIViewController {
     
     lazy var collectionView: UICollectionView = {
         let collection = UICollectionView(frame: .zero, collectionViewLayout: collectionFlowLayout)
-//        collection.prefetchDataSource = self
         collection.backgroundColor = .clear
         collection.register(CardCollectionViewCell.self, forCellWithReuseIdentifier: Identifier.Cell.cardCell)
+        collection.register(CardsSectionHeaderView.self, forSupplementaryViewOfKind: "UICollectionElementKindSectionHeader", withReuseIdentifier: Identifier.Cell.cardsSectionHeaderCell)
         collection.translatesAutoresizingMaskIntoConstraints = false
         return collection
     }()
@@ -67,9 +67,11 @@ class CardsCollectionViewController: UIViewController {
     // MARK: Life Cicle
     override func viewDidLoad() {
         super.viewDidLoad()
-//        view.layer.contents = #imageLiteral(resourceName: "fundo").cgImage
         view.layer.contents = Images.background.cgImage
         self.navigationItem.title = cardSet?.name ?? ""
+        self.navigationController?.navigationBar.tintColor = MainColor.title
+//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+//        self.navigationItem.backBarButtonItem?.title = ""
         setupViews()
         fetchCards()
     }
@@ -90,14 +92,9 @@ class CardsCollectionViewController: UIViewController {
         networkManager.request(service: service, responseType: CardSetCards.self) { (result) in
             switch result {
             case .success(let cards):
-                print("Successssss!")
-                print("*************")
                 self.dataSource = CardsCollectionDataSource(cardss: cards.cards)
             case .failure(let error):
-                print("******")
-                print("CardSet has no cards to show =/")
                 print("Error: ", error)
-                print("******")
             }
         }
     }

@@ -20,6 +20,6 @@ struct Card: Codable {
     let types: [String]?           //list of card types
     let set: String?               //set id
     let setName: String?           //set name
-    let imageURL: String?          // image Url
+    let imageUrl: String?          // image Url
     let id: String?                //card id
 }

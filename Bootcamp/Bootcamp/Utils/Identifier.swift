@@ -11,5 +11,6 @@ enum Identifier {
     enum Cell {
         static let expansionCell = "expansionCell"
         static let cardCell = "cardCell"
+        static let cardsSectionHeaderCell = "cardsSectionHeaderCell"
     }
 }

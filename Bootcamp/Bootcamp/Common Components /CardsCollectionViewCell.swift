@@ -15,7 +15,7 @@ class CardCollectionViewCell: UICollectionViewCell {
     let cardImage: UIImageView = {
         let vec = UIImageView(frame: .zero)
         vec.clipsToBounds = true
-        vec.contentMode = .scaleAspectFill
+        vec.contentMode = .scaleAspectFit
         vec.translatesAutoresizingMaskIntoConstraints = false
         return vec
     }()
@@ -34,10 +34,9 @@ class CardCollectionViewCell: UICollectionViewCell {
     
     // MARK: Setup
     func setup(cardImageUrl: String?) {
-        if let image = cardImageUrl {
-            cardImage.image = Images.cardBack
-        } else {
-            cardImage.image = Images.cardBack
+        cardImage.image = Images.cardBack
+        if let imageUrl = cardImageUrl {
+            cardImage.setImage(url: URL(string: imageUrl))
         }
     }
     

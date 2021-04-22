@@ -47,8 +47,6 @@ final class NetworkManager: NetworkManagerProtocol {
     
     func decode<T: Decodable>(data: Data) -> T?{
         let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        
         guard let object = try? decoder.decode(T.self, from: data) else {
             return nil
         }
