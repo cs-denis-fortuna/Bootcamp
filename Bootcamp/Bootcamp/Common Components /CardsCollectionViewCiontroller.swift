@@ -44,8 +44,7 @@ class CardsCollectionViewController: UIViewController {
     }
     
     // MARK: Fetch Type
-    private var networkManager: NetworkManagerProtocol?
-    private var dbManager: DBManagerProtocol?
+    private var cardsSource: CardsCollectionViewProtocol
     
     private var cardSet: CardSet?
     
@@ -53,9 +52,8 @@ class CardsCollectionViewController: UIViewController {
     weak var coordinator: CardsCoordinatorProtocol?
     
     // MARK: Init
-    init(networkManager: NetworkManagerProtocol?, dbManager: DBManagerProtocol?, cardSet: CardSet?) {
-        self.networkManager = networkManager
-        self.dbManager = dbManager
+    init(cardsSource: CardsCollectionViewProtocol, cardSet: CardSet?) {
+        self.cardsSource = cardsSource
         self.cardSet = cardSet
         super.init(nibName: nil, bundle: nil)
      }
@@ -70,26 +68,12 @@ class CardsCollectionViewController: UIViewController {
         view.layer.contents = Images.background.cgImage
         self.navigationItem.title = cardSet?.name ?? ""
         self.navigationController?.navigationBar.tintColor = MainColor.title
-//        self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-//        self.navigationItem.backBarButtonItem?.title = ""
         setupViews()
         fetchCards()
     }
     
     private func fetchCards() {
-        if let networkManager = networkManager {
-            requestCards(networkManager)
-        } else if let dbManager = dbManager {
-            fetchCardsLocally(dbManager)
-        } else {
-            print("Erro!")
-        }
-    }
-    
-    private func requestCards(_ networkManager: NetworkManagerProtocol) {
-        guard let cardSetId = cardSet?.code else { return }
-        let service = MagicService.cardsFromSet(setId: cardSetId)
-        networkManager.request(service: service, responseType: CardSetCards.self) { (result) in
+        cardsSource.fetchCards(responseType: CardSetCards.self, cardSet: cardSet)  { (result) in
             switch result {
             case .success(let cards):
                 self.dataSource = CardsCollectionDataSource(cardss: cards.cards)
@@ -97,10 +81,6 @@ class CardsCollectionViewController: UIViewController {
                 print("Error: ", error)
             }
         }
-    }
-    
-    private func fetchCardsLocally(_ dbManager: DBManagerProtocol) {
-        
     }
 }
 

@@ -7,11 +7,7 @@
 
 import Foundation
 
-protocol DBManagerProtocol {
-
-}
-
-final class DBManager: DBManagerProtocol {
+final class DBManager {
     
 
 }

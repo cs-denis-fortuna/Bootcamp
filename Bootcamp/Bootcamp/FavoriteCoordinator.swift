@@ -17,8 +17,8 @@ final class FavoriteCoordinator: CardsCoordinatorProtocol {
     }
     
     func start(with navigationType: NavigationType) -> UIViewController {
-        let dbManager = DBManager()
-        let cardsCollection = CardsCollectionViewController(networkManager: nil, dbManager: dbManager, cardSet: nil)
+        let cardsSource = DBManager()
+        let cardsCollection = CardsCollectionViewController(cardsSource: cardsSource, cardSet: nil)
         cardsCollection.coordinator = self
         navigationController?.viewControllers = [cardsCollection]
         guard let navController = navigationController else { return UIViewController() }
