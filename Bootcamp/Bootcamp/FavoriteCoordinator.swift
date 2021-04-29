@@ -25,7 +25,7 @@ final class FavoriteCoordinator: CardsCoordinatorProtocol {
         return navController
     }
     
-    func didSelectCard(_ cardId: Card) {
+    func didSelectCard(withCards cards: [Card], selectedCard: Card, andIndexPath indexPath: IndexPath) {
         
     }
 }

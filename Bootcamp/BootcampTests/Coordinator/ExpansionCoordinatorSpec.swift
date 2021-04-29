@@ -43,9 +43,22 @@ class ExpansionCoordinatorSpec: QuickSpec {
                 
                 it("Coordinator returns a NavigationController with only ExpansionListViewController in it's stack") {
                     expect(sutStart is UINavigationController).to(equal(true))
-                    expect(sut.navigationController?.viewControllers.count).to(equal(2))
-//                    expect((sutStart as? UINavigationController)?.viewControllers.count).to(equal(2))
-//                    expect((sutStart as? UINavigationController)?.viewControllers[0] is ExpansionListViewController).to(equal(true))
+                    expect(sut.navigationController?.viewControllers.count).to(equal(1))
+                }
+            }
+            context("didSelectCard") {
+                
+                beforeEach {
+                    sut = ExpansionCoordinator()
+                    sutStart = sut.start(with: .push)
+                    let cardSet = CardSet(code:"10E", name: "Tenth Edition", type: "core", border: nil, mkmId: nil, mkmName: nil, releaseDate: "2007-07-13", magicCardsInfoCode: nil, block: "Core Set", onlineOnly: false)
+                    sut.didSelectExpansion(cardSet)
+                    sut.didSelectCard(withCards: <#T##[Card]#>, selectedCard: <#T##Card#>, andIndexPath: <#T##IndexPath#>)
+                }
+                
+                it("Coordinator returns a NavigationController with only ExpansionListViewController in it's stack") {
+                    expect(sutStart is UINavigationController).to(equal(true))
+                    expect(sut.navigationController?.viewControllers.count).to(equal(1))
                 }
             }
         }

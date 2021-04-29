@@ -33,7 +33,7 @@ class MainTabBarControler: UITabBarController {
     
     private func tabBarConfig() {
         UITabBar.appearance().tintColor = MainColor.title
-        UITabBar.appearance().unselectedItemTintColor = MainColor.title
+        UITabBar.appearance().unselectedItemTintColor = DisableTextColor.title
         UITabBar.appearance().backgroundImage = UIImage()
         UITabBar.appearance().shadowImage = UIImage()
         UITabBar.appearance().clipsToBounds = true
